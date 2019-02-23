@@ -19,7 +19,13 @@ class myDB :
         if inputVal in self.db :
             print (self.db[inputVal])
             return self.db[inputVal]
-            
+        else :
+            dbSortedItemes = sorted(d.iteritems())
+            dbSize = len(dbSortedItemes)
+            if dbSize == 0 :
+                return None
+            else
+
 
 if __name__ == "__main__" :
     dbObj = myDB()
