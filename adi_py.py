@@ -30,17 +30,27 @@ class myDB :
                 return self.db[list(self.db)[0]]
             else :
                 sortedKeys = list(self.db.keys()).sort()
-                minKey = self.db[sortedKeys[0]]
-                maxKey = self.db[sortedKeys[-1]]
-                if inputValue <  minKey:
-                    return self.db[minKey]
-                elif inputValue >  maxKey:
-                    return self.db[maxKey]
-                elif inputValue in self.db.keys() :
-                    return self.db[inputValue]
 
+                minKey = self.db[sortedKeys[0]]     # Lowest key value
+                maxKey = self.db[sortedKeys[-1]]    # Highest key value
+
+                if inputValue <  minKey:            # required key below lowest value
+                    return self.db[minKey]
+                elif inputValue >  maxKey:          # required key above highest value
+                    return self.db[maxKey]
+                elif inputValue in self.db.keys() : # required key has an exact key in database
+                    return self.db[inputValue]
+                else :                              # required key is in range, but no specific key in database
+                    for count, currKey in enumerate(sortedKeys) :
+                        if (inputValue > self.db[sortedKeys[count]]) and \
+                           (inputValue < self.db[sortedKeys[count+1]]) :
+                             return (self.db[sortedKeys[count]] + self.db[sortedKeys[count+1]]) / 2.0
+                        #if count == len(sortedKeys) - 1 :       # If reached the end of the dictionay
+                        #    return (self.db[sortedKeys[count-1]] + self.db[sortedKeys[count]]) / 2.0
+                        #else :
+                        #    return (self.db[sortedKeys[count-1]] + self.db[sortedKeys[count]]) / 2.0
 
 
 if __name__ == "__main__" :
     dbObj = myDB()
-    print ("Output is ", dbObj.getVal(2))
+    print ("Output is ", dbObj.getVal(1.5))
